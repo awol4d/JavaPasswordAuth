@@ -1,0 +1,56 @@
+package passwordAuth;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+/**
+*
+* @author Alex Wolford
+*/
+public class Login {
+
+	public static void main(String[] args) throws IOException {
+		//Scanner for user input
+		Scanner sc = new Scanner(System.in);
+		
+		//User enters login username and password
+		System.out.println("Login username: ");
+		//if username entered, ask for password
+		if(sc.hasNextLine()) {
+			String userName= sc.nextLine();
+			System.out.println("Password: ");
+			String password = sc.nextLine();
+			
+			//hash password
+			String login = (userName + "  " + JavaMD5Hash.md5(password));
+		
+				//Open BufferedReader and read users file line by line
+				//**Buffered reader cannot return a read line**
+				BufferedReader reader = new BufferedReader(new FileReader("..\\passwordAuth\\users.txt"));
+				//New array list to read from users file and store received lines as strings
+				ArrayList<String> stored = new ArrayList<String>();
+				//Variable for reading next line
+				String line;
+				while ((line= reader.readLine()) != null) {
+					//Add the read line to the array list
+					stored.add(line);
+				}//while loop close
+				if(stored.contains(login)) {
+					System.out.print("Login Successful! Welcome "+ userName);
+				}else{
+					System.out.print("Incorrect Username or Password");
+				} //if statement close
+	
+			//close scanner
+			sc.close();
+			//close reader
+			reader.close();
+			
+		
+	} // if has next line statement close
+		
+	}// main close
+	
+}//class close
